@@ -6,7 +6,7 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 
 // Routes
-const pingRoute = require("./routes/ping");
+const printersRoute = require("./routes/printers");
 
 // Environment variables
 const port = process.env.PORT || 4000;
@@ -34,9 +34,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs));
+app.use(
+  "/docs",
+  swaggerUI.serve,
+  swaggerUI.setup(specs, undefined, {
+    defaultModelRendering: "model",
+    defaultModelsExpandDepth: 100,
+    defaultModelExpandDepth: 100,
+  })
+);
 
-app.use("/ping", pingRoute);
+app.use("/printers", printersRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
