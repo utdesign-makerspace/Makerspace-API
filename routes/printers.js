@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { isAuth } = require("../lib/auth");
 
 /**
  * @swagger
@@ -125,7 +126,7 @@ const router = express.Router();
  *                      emoji: "🔴"
  */
 
-router.get("/", (req, res) => {
+router.get("/", isAuth, (req, res) => {
   res.send({ message: "Pong!" });
 });
 
@@ -157,7 +158,7 @@ router.get("/", (req, res) => {
  *               $ref: '#/components/schemas/PrinterFull'
  */
 
-router.get("/:id", (req, res) => {
+router.get("/:id", isAuth, (req, res) => {
   res.send({ message: "Pong!" });
 });
 
@@ -224,7 +225,7 @@ router.get("/:id", (req, res) => {
  *               $ref: '#/components/schemas/PrinterFull'
  */
 
-router.post("/", (req, res) => {
+router.post("/", isAuth, (req, res) => {
   res.send({ message: "Pong!" });
 });
 
@@ -288,7 +289,7 @@ router.post("/", (req, res) => {
  *               $ref: '#/components/schemas/PrinterFull'
  */
 
-router.patch("/:id", (req, res) => {
+router.patch("/:id", isAuth, (req, res) => {
   res.send({ message: "Pong!" });
 });
 
@@ -313,7 +314,7 @@ router.patch("/:id", (req, res) => {
  *               $ref: '#/components/schemas/PrinterFull'
  */
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", isAuth, (req, res) => {
   res.send({ message: "Pong!" });
 });
 
@@ -349,7 +350,7 @@ router.delete("/:id", (req, res) => {
  *                      name: "Red"
  */
 
-router.get("/names", (req, res) => {
+router.get("/names", isAuth, (req, res) => {
   res.send({ message: "Pong!" });
 });
 
