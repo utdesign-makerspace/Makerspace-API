@@ -25,6 +25,20 @@ const options = {
         url: "http://localhost:4000",
       },
     ],
+    components: {
+      securitySchemes: {
+        ApiKeyAuth: {
+          type: "apiKey",
+          in: "header",
+          name: "X-API-KEY",
+        },
+      },
+    },
+    security: [
+      {
+        ApiKeyAuth: [],
+      },
+    ],
   },
   apis: ["./routes/*.js"],
 };
@@ -37,15 +51,17 @@ app.use(morgan("dev"));
 app.use(
   "/docs",
   swaggerUI.serve,
-  swaggerUI.setup(specs, undefined, {
-    defaultModelRendering: "model",
-    defaultModelsExpandDepth: 100,
-    defaultModelExpandDepth: 100,
+  swaggerUI.setup(specs, {
+    swaggerOptions: {
+      defaultModelRendering: "model",
+      defaultModelsExpandDepth: 100,
+      defaultModelExpandDepth: 100,
+    },
   })
 );
 
 app.use("/printers", printersRoute);
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running: http://localhost:${port}/docs`);
 });
