@@ -1,13 +1,13 @@
 // Packages
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
-const swaggerUI = require("swagger-ui-express");
-const swaggerJsDoc = require("swagger-jsdoc");
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import swaggerUI from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
 require("dotenv").config();
 
 // Routes
-const printersRoute = require("./routes/printers");
+import printersRoute from "./printers/endpoints";
 
 // Environment variables
 const port = process.env.PORT || 4000;
@@ -41,7 +41,7 @@ const options = {
       },
     ],
   },
-  apis: ["./routes/*.js"],
+  apis: ["./**/endpoints.ts"],
 };
 const specs = swaggerJsDoc(options);
 const app = express();
@@ -61,7 +61,7 @@ app.use(
   })
 );
 
-app.use("/printers", printersRoute);
+app.use("/v1/printers", printersRoute);
 
 app.listen(port, () => {
   console.log(`Server is running: http://localhost:${port}/docs`);

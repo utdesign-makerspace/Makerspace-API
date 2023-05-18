@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
+import { isAuth } from "../auth/lib";
 const router = express.Router();
-const { isAuth } = require("../lib/auth");
 
 /**
  * @swagger
@@ -12,7 +12,6 @@ const { isAuth } = require("../lib/auth");
  *         - id
  *         - name
  *         - model
- *         - color
  *         - thumbnail
  *         - emoji
  *       properties:
@@ -25,9 +24,6 @@ const { isAuth } = require("../lib/auth");
  *         model:
  *           type: string
  *           description: The model of the printer
- *         color:
- *           type: string
- *           description: The color of the printer
  *         thumbnail:
  *           type: string
  *           description: The link to a thumbnail image of the printer
@@ -40,7 +36,6 @@ const { isAuth } = require("../lib/auth");
  *         - id
  *         - name
  *         - model
- *         - color
  *         - thumbnail
  *         - emoji
  *         - status
@@ -56,9 +51,6 @@ const { isAuth } = require("../lib/auth");
  *         model:
  *           type: string
  *           description: The model of the printer
- *         color:
- *           type: string
- *           description: The color of the printer
  *         thumbnail:
  *           type: string
  *           description: The link to a thumbnail image of the printer
@@ -81,7 +73,6 @@ const { isAuth } = require("../lib/auth");
  *         id: "red"
  *         name: "Red"
  *         model: "Ender-3 Pro"
- *         color: "#dd2e44"
  *         thumbnail: "https://i.imgur.com/18fhzLl.png"
  *         emoji: "🔴"
  *         status: "Operational"
@@ -99,7 +90,7 @@ const { isAuth } = require("../lib/auth");
 
 /**
  * @swagger
- * /printers:
+ * /v1/printers:
  *   get:
  *     summary: Get the information of all 3D printers
  *     tags: [3D Printers]
@@ -121,7 +112,6 @@ const { isAuth } = require("../lib/auth");
  *                    - id: "red"
  *                      name: "Red"
  *                      model: "Ender-3 Pro"
- *                      color: "#dd2e44"
  *                      thumbnail: "https://i.imgur.com/18fhzLl.png"
  *                      emoji: "🔴"
  */
@@ -132,7 +122,7 @@ router.get("/", isAuth, (req, res) => {
 
 /**
  * @swagger
- * /printers/{id}:
+ * /v1/printers/{id}:
  *   get:
  *     summary: Get the detailed information of a 3D printer
  *     parameters:
@@ -164,7 +154,7 @@ router.get("/:id", isAuth, (req, res) => {
 
 /**
  * @swagger
- * /printers:
+ * /v1/printers:
  *   post:
  *     summary: Create a 3D printer in the database
  *     parameters:
@@ -176,7 +166,6 @@ router.get("/:id", isAuth, (req, res) => {
  *           required:
  *             - name
  *             - model
- *             - color
  *             - thumbnail
  *             - emoji
  *             - ip
@@ -189,9 +178,6 @@ router.get("/:id", isAuth, (req, res) => {
  *             model:
  *               type: string
  *               description: The model of the printer
- *             color:
- *               type: string
- *               description: The color of the printer
  *             thumbnail:
  *               type: string
  *               description: The link to a thumbnail image of the printer
@@ -210,7 +196,6 @@ router.get("/:id", isAuth, (req, res) => {
  *           example:
  *             name: "Red"
  *             model: "Ender-3 Pro"
- *             color: "#dd2e44"
  *             thumbnail: "https://i.imgur.com/18fhzLl.png"
  *             emoji: "🔴"
  *             ip: "192.168.1.1"
@@ -231,7 +216,7 @@ router.post("/", isAuth, (req, res) => {
 
 /**
  * @swagger
- * /printers/{id}:
+ * /v1/printers/{id}:
  *   patch:
  *     summary: Update a 3D printer in the database
  *     parameters:
@@ -253,9 +238,6 @@ router.post("/", isAuth, (req, res) => {
  *             model:
  *               type: string
  *               description: The model of the printer
- *             color:
- *               type: string
- *               description: The color of the printer
  *             thumbnail:
  *               type: string
  *               description: The link to a thumbnail image of the printer
@@ -274,7 +256,6 @@ router.post("/", isAuth, (req, res) => {
  *           example:
  *             name: "Red"
  *             model: "Ender-3 Pro"
- *             color: "#dd2e44"
  *             thumbnail: "https://i.imgur.com/18fhzLl.png"
  *             emoji: "🔴"
  *             ip: "192.168.1.1"
@@ -295,7 +276,7 @@ router.patch("/:id", isAuth, (req, res) => {
 
 /**
  * @swagger
- * /printers/{id}:
+ * /v1/printers/{id}:
  *   delete:
  *     summary: Remove a 3D printer from the database
  *     parameters:
@@ -320,7 +301,7 @@ router.delete("/:id", isAuth, (req, res) => {
 
 /**
  * @swagger
- * /printers/names:
+ * /v1/printers/names:
  *   get:
  *     summary: Get the names of all 3D printers, useful for dropdowns
  *     tags: [3D Printers]
@@ -354,4 +335,4 @@ router.get("/names", isAuth, (req, res) => {
   res.send({ message: "Pong!" });
 });
 
-module.exports = router;
+export default router;
